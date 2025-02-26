@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link href="{{ "pro.css" | assetUrl }}" rel="stylesheet"/>
+    <link href="{{ "custom.css" | assetUrl }}" rel="stylesheet"/>
+
+    <style id="theme-styles">
+      :root {
+        --cl-primary: {{ global.properties.theme_color  }};
+        --cl-primary-hex: {{ global.properties.theme_color | hex_to_rgb }};
+        --cl-primary-dark: {{ global.properties.theme_color }};
+        --cl-primary-darker: {{ global.properties.theme_color }};
+        --bs-body-bg: {{ global.properties.primary_background_color }};
+        --bs-body-bg-rgb: {{ global.properties.primary_background_color | hex_to_rgb }};
+        --bs-gray-bg: {{ global.properties.secondary_background_color }};
+        --bs-border-color: {{ global.properties.primary_border_color }};
+        --bs-border-secondary-color: {{ global.properties.secondary_border_color }};
+        --bs-font-sans-serif: '{{ (global.properties.font if global.properties.font else 'Poppins') }}', sans-serif;
+      }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ (global.properties.font if global.properties.font else 'Poppins') | replace(" ", "+") }}:wght@300;400;500;600;700&display=swap" rel="stylesheet" id="theme-font">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    {% if shop.background_image_url %}
+      <div class="bg-image" style="background-image: url({{ shop.background_image_url }});"></div>
+    {% endif %}
+    
+    <div id="app">
+      {{ templateContent | safe }}
+    </div>
+
+    {% if isBuilder %}
+      {% render_snippet "script-builder.njk" %}
+    {% endif %}
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.2/dist/cdn.min.js"
+      integrity="sha256-MAnclv071ggEnpQbfWW6weXXKd5wErU2fZ6yuDYvdPE="
+      crossorigin="anonymous"
+    ></script>
+    <script 
+      src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<section class="container py-20 component" id="products" data-component-id="{{ componentId }}">
+  {% if properties.title %}
+  <div class="section-title">
+    <h2>{{ properties.title | renderString }}</h2>
+  </div>
+  {% endif %}
+  {% if properties.subtitle %}
+  <div class="section-subtitle">
+    <p>{{ properties.subtitle | renderString }}</p>
+  </div>
+  {% endif %}
+  <div>
+    <div class="row products">
+      {% if properties.ids|length == 0 %}
+        {% for product in sortedItems %}
+          {% if product.type == 'group' or not product.group_id %}
+            {% render_snippet "product-card.njk", product=product %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for product in helpers.components.products.getItemsByIds(sortedItems, properties.ids) %}
+          {% render_snippet "product-card.njk", product=product %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% for product in sortedItems %}
+{% if product.type == 'group' %}
+<div class="modal fade" id="group-modal-{{ product.id }}" tabindex="-1" aria-labelledby="group-modal-{{ product.id }}-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="group-modal-{{ product.id }}-label">
+                    {{ product.name }} Products
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="products row">
+                    {% for product in product.products %}
+                        {% render_snippet "product-card.njk", product=product %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
